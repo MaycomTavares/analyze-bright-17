@@ -45,7 +45,7 @@ export function DeliveriesPage() {
               <button
                 key={f.v}
                 onClick={() => setFilter(f.v)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
+                className={`az-btn px-3 py-1.5 rounded-lg text-xs font-semibold ${
                   filter === f.v ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-700"
                 }`}
               >
@@ -67,10 +67,14 @@ export function DeliveriesPage() {
               </tr>
             </thead>
             <tbody>
-              {rows.map((r) => {
+              {rows.map((r, i) => {
                 const pct = Math.round((r.qtyDone / r.qtyTotal) * 100);
                 return (
-                  <tr key={r.id} className="border-t border-slate-100 hover:bg-slate-50/60 transition">
+                  <tr
+                    key={r.id}
+                    className="border-t border-slate-100 hover:bg-slate-50/60 transition az-row-in"
+                    style={{ animationDelay: `${Math.min(i, 12) * 50}ms` }}
+                  >
                     <td className="px-6 py-4 font-mono text-xs text-slate-700">{r.id}</td>
                     <td className="px-6 py-4 text-slate-900 font-medium">{r.product}</td>
                     <td className="px-6 py-4">
