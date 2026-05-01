@@ -11,11 +11,11 @@ type Item = {
 };
 
 const items: Item[] = [
-  { to: "/app", label: "Dashboard", icon: LayoutDashboard, exact: true },
-  { to: "/app/deliveries", label: "Deliveries", icon: Truck },
-  { to: "/app/billing", label: "Billing", icon: Receipt },
-  { to: "/app/reports", label: "Reports", icon: FileBarChart2 },
-  { to: "/app/settings", label: "Settings", icon: Settings },
+  { to: "/app", label: "Painel", icon: LayoutDashboard, exact: true },
+  { to: "/app/deliveries", label: "Entregas", icon: Truck },
+  { to: "/app/billing", label: "Faturamento", icon: Receipt },
+  { to: "/app/reports", label: "Relatórios", icon: FileBarChart2 },
+  { to: "/app/settings", label: "Configurações", icon: Settings },
 ];
 
 export function AnalizzeSidebar() {
@@ -42,7 +42,7 @@ export function AnalizzeSidebar() {
               ANALIZZE
             </div>
             <div className="text-[10px] tracking-[0.2em] text-white/40 mt-1 uppercase">
-              Enterprise Intel
+              Inteligência Corporativa
             </div>
           </div>
         </div>
@@ -77,7 +77,7 @@ export function AnalizzeSidebar() {
           <span className="text-[10px] tracking-[0.18em] uppercase text-white/40">Cluster</span>
           <span className="flex items-center gap-1.5 text-[11px] text-white/70">
             <span className={cn("h-1.5 w-1.5 rounded-full", supabaseSync ? "bg-emerald-400 shadow-[0_0_8px_rgb(52_211_153)]" : "bg-zinc-500")} />
-            {supabaseSync ? "Online" : "Paused"}
+            {supabaseSync ? "Online" : "Pausado"}
           </span>
         </div>
         <button
@@ -85,7 +85,7 @@ export function AnalizzeSidebar() {
           className="w-full flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-white/60 hover:text-white hover:bg-white/5 transition"
         >
           <LogOut className="h-4 w-4" />
-          Sign out
+          Sair
         </button>
       </div>
     </aside>
