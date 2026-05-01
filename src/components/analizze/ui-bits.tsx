@@ -25,7 +25,7 @@ export function Card({
   );
 }
 
-export function Spinner({ label = "Loading" }: { label?: string }) {
+export function Spinner({ label = "Carregando" }: { label?: string }) {
   return (
     <div className="flex flex-col items-center gap-3 text-slate-500">
       <Loader2 className="h-6 w-6 animate-spin text-brand" />
@@ -52,7 +52,7 @@ export function StatusBadge({ status }: { status: "on-time" | "delayed" | "criti
     delayed: "bg-amber-50 text-amber-700 ring-amber-200/70",
     critical: "bg-rose-50 text-rose-700 ring-rose-200/70",
   } as const;
-  const label = { "on-time": "On-time", delayed: "Delayed", critical: "Critical" }[status];
+  const label = { "on-time": "No prazo", delayed: "Atrasado", critical: "Crítico" }[status];
   return (
     <span className={cn("inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ring-1", map[status])}>
       <span className={cn(

@@ -4,12 +4,12 @@ import { Card, PageHeader } from "../ui-bits";
 import { useAnalizze } from "@/lib/analizze-store";
 
 const errorData = [
-  { m: "Jan", mape: 5.2, bias: -1.2 },
-  { m: "Feb", mape: 4.8, bias: -0.6 },
-  { m: "Mar", mape: 4.1, bias: 0.4 },
-  { m: "Apr", mape: 3.7, bias: 0.9 },
-  { m: "May", mape: 3.2, bias: 1.1 },
-  { m: "Jun", mape: 3.5, bias: 0.7 },
+  { m: "Jan", mape: 5.2, vies: -1.2 },
+  { m: "Fev", mape: 4.8, vies: -0.6 },
+  { m: "Mar", mape: 4.1, vies: 0.4 },
+  { m: "Abr", mape: 3.7, vies: 0.9 },
+  { m: "Mai", mape: 3.2, vies: 1.1 },
+  { m: "Jun", mape: 3.5, vies: 0.7 },
 ];
 
 export function ReportsPage() {
@@ -33,23 +33,23 @@ export function ReportsPage() {
   };
 
   const metrics = [
-    { label: "MAPE", value: "3.2%", icon: Sigma, hint: "Mean Absolute Percentage Error" },
-    { label: "Bias", value: "+1.1", icon: Activity, hint: "Forecast bias index" },
-    { label: "R² Score", value: "0.964", icon: BarChart3, hint: "Coefficient of determination" },
-    { label: "Throughput", value: "12.4k/h", icon: Zap, hint: "Pipeline rows per hour" },
+    { label: "MAPE", value: "3,2%", icon: Sigma, hint: "Erro Percentual Absoluto Médio" },
+    { label: "Viés", value: "+1,1", icon: Activity, hint: "Índice de viés da previsão" },
+    { label: "R²", value: "0,964", icon: BarChart3, hint: "Coeficiente de determinação" },
+    { label: "Vazão", value: "12,4k/h", icon: Zap, hint: "Linhas processadas por hora" },
   ];
 
   return (
     <div>
       <PageHeader
-        title="Reports"
-        subtitle="Relatórios — model accuracy & operational metrics"
+        title="Relatórios"
+        subtitle="Acurácia do modelo e métricas operacionais"
         actions={
           <button
             onClick={downloadCSV}
             className="inline-flex items-center gap-2 bg-slate-900 text-white text-sm font-semibold px-4 py-2.5 rounded-xl hover:bg-slate-800 transition shadow-sm"
           >
-            <Download className="h-4 w-4" /> Download Dataset
+            <Download className="h-4 w-4" /> Baixar Dataset
           </button>
         }
       />
@@ -68,8 +68,8 @@ export function ReportsPage() {
       <Card className="p-7">
         <div className="flex items-end justify-between mb-5">
           <div>
-            <h3 className="text-lg font-black italic tracking-tight text-slate-900">Forecast Error Trend</h3>
-            <p className="text-xs text-slate-500 mt-0.5">MAPE & Bias — last 6 months</p>
+            <h3 className="text-lg font-black italic tracking-tight text-slate-900">Tendência de Erro da Previsão</h3>
+            <p className="text-xs text-slate-500 mt-0.5">MAPE e Viés — últimos 6 meses</p>
           </div>
         </div>
         <div className="h-[300px]">
@@ -80,7 +80,7 @@ export function ReportsPage() {
               <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} />
               <Tooltip contentStyle={{ borderRadius: 12, border: "1px solid #e2e8f0", fontSize: 12 }} />
               <Bar dataKey="mape" fill="#2563eb" radius={[8, 8, 0, 0]} />
-              <Bar dataKey="bias" fill="#10b981" radius={[8, 8, 0, 0]} />
+              <Bar dataKey="vies" fill="#10b981" radius={[8, 8, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>

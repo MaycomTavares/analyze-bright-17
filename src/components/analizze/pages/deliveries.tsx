@@ -19,8 +19,8 @@ export function DeliveriesPage() {
   return (
     <div>
       <PageHeader
-        title="Deliveries"
-        subtitle="Production lots — controle de entregas"
+        title="Entregas"
+        subtitle="Controle de entregas — lotes de produção"
         actions={<NewDocumentModal defaultTable="carteira" />}
       />
 
@@ -31,20 +31,25 @@ export function DeliveriesPage() {
             <input
               value={q}
               onChange={(e) => setQ(e.target.value)}
-              placeholder="Search by ID or product..."
+              placeholder="Buscar por ID ou produto..."
               className="w-full pl-10 pr-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:bg-white focus:border-brand focus:ring-2 focus:ring-brand/15 outline-none transition"
             />
           </div>
           <div className="flex gap-1 p-1 bg-slate-100 rounded-xl">
-            {(["all", "on-time", "delayed", "critical"] as const).map((f) => (
+            {([
+              { v: "all", l: "Todos" },
+              { v: "on-time", l: "No prazo" },
+              { v: "delayed", l: "Atrasados" },
+              { v: "critical", l: "Críticos" },
+            ] as const).map((f) => (
               <button
-                key={f}
-                onClick={() => setFilter(f)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold capitalize transition ${
-                  filter === f ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-700"
+                key={f.v}
+                onClick={() => setFilter(f.v)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
+                  filter === f.v ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-700"
                 }`}
               >
-                {f}
+                {f.l}
               </button>
             ))}
           </div>
@@ -55,10 +60,10 @@ export function DeliveriesPage() {
             <thead>
               <tr className="text-left text-[11px] font-semibold tracking-wider uppercase text-slate-500 bg-slate-50/50">
                 <th className="px-6 py-3.5">ID</th>
-                <th className="px-6 py-3.5">Product</th>
-                <th className="px-6 py-3.5 w-[260px]">Quantity</th>
+                <th className="px-6 py-3.5">Produto</th>
+                <th className="px-6 py-3.5 w-[260px]">Quantidade</th>
                 <th className="px-6 py-3.5">Status</th>
-                <th className="px-6 py-3.5">Deadline</th>
+                <th className="px-6 py-3.5">Prazo</th>
               </tr>
             </thead>
             <tbody>
@@ -90,7 +95,7 @@ export function DeliveriesPage() {
                 );
               })}
               {rows.length === 0 && (
-                <tr><td colSpan={5} className="text-center py-12 text-slate-400 text-sm">No lots match the current filter.</td></tr>
+                <tr><td colSpan={5} className="text-center py-12 text-slate-400 text-sm">Nenhum lote corresponde ao filtro atual.</td></tr>
               )}
             </tbody>
           </table>

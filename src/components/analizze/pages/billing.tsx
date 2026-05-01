@@ -21,26 +21,26 @@ export function BillingPage() {
     return Array.from(map, ([name, value]) => ({ name, value }));
   }, [faturamento]);
 
-  const fmt = (n: number) => "$" + n.toLocaleString("en-US");
+  const fmt = (n: number) => "R$ " + n.toLocaleString("pt-BR");
 
   const cards = [
-    { label: "Realized", value: totals.realized, accent: "from-emerald-500 to-emerald-600", trend: "+12.4%", up: true, icon: CheckCircle2 },
-    { label: "Lost", value: totals.lost, accent: "from-rose-500 to-rose-600", trend: "-3.1%", up: false, icon: TrendingDown },
-    { label: "Projected", value: totals.projected, accent: "from-brand to-indigo-600", trend: "+8.7%", up: true, icon: TrendingUp },
+    { label: "Realizado", value: totals.realized, accent: "from-emerald-500 to-emerald-600", trend: "+12,4%", up: true, icon: CheckCircle2 },
+    { label: "Perdido", value: totals.lost, accent: "from-rose-500 to-rose-600", trend: "-3,1%", up: false, icon: TrendingDown },
+    { label: "Projetado", value: totals.projected, accent: "from-brand to-indigo-600", trend: "+8,7%", up: true, icon: TrendingUp },
   ];
 
   const alerts = [
-    { type: "warn", text: "FT-1004 Lumen Aerospace marked as lost — review reason." },
-    { type: "info", text: "Projected revenue for May exceeds Q2 target by 4.2%." },
-    { type: "warn", text: "Helix Pharma payment overdue by 6 days." },
-    { type: "ok", text: "April collection rate reached 96.8%." },
+    { type: "warn", text: "FT-1004 Lumen Aeroespacial marcada como perdida — revisar motivo." },
+    { type: "info", text: "Receita projetada de Maio supera meta do Q2 em 4,2%." },
+    { type: "warn", text: "Pagamento da Helix Farma em atraso há 6 dias." },
+    { type: "ok", text: "Taxa de cobrança de Abril atingiu 96,8%." },
   ];
 
   return (
     <div>
       <PageHeader
-        title="Billing"
-        subtitle="Faturamento — realized, lost and projected"
+        title="Faturamento"
+        subtitle="Realizado, perdido e projetado"
         actions={<NewDocumentModal defaultTable="faturamento" />}
       />
 
@@ -66,8 +66,8 @@ export function BillingPage() {
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-5">
         <Card className="xl:col-span-2 p-7">
-          <h3 className="text-lg font-black italic tracking-tight text-slate-900 mb-1">Category Distribution</h3>
-          <p className="text-xs text-slate-500 mb-4">Revenue split by industry vertical</p>
+          <h3 className="text-lg font-black italic tracking-tight text-slate-900 mb-1">Distribuição por Categoria</h3>
+          <p className="text-xs text-slate-500 mb-4">Receita por vertical de mercado</p>
           <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-6">
             <div className="h-[260px]">
               <ResponsiveContainer width="100%" height="100%">
@@ -94,7 +94,7 @@ export function BillingPage() {
         </Card>
 
         <Card className="p-6">
-          <h3 className="text-lg font-black italic tracking-tight text-slate-900 mb-4">Financial Alerts</h3>
+          <h3 className="text-lg font-black italic tracking-tight text-slate-900 mb-4">Alertas Financeiros</h3>
           <ul className="space-y-3">
             {alerts.map((a, i) => {
               const Icon = a.type === "warn" ? AlertTriangle : a.type === "ok" ? CheckCircle2 : Info;

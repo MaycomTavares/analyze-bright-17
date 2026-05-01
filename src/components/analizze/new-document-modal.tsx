@@ -46,7 +46,7 @@ export function NewDocumentModal({ defaultTable = "carteira" }: { defaultTable?:
         onClick={() => setOpen(true)}
         className="inline-flex items-center gap-2 bg-slate-900 text-white text-sm font-semibold px-4 py-2.5 rounded-xl hover:bg-slate-800 transition shadow-sm"
       >
-        <Plus className="h-4 w-4" /> New Document
+        <Plus className="h-4 w-4" /> Novo Documento
       </button>
 
       {open && (
@@ -54,8 +54,8 @@ export function NewDocumentModal({ defaultTable = "carteira" }: { defaultTable?:
           <div className="bg-white rounded-3xl w-full max-w-lg p-7 shadow-2xl animate-in zoom-in-95 duration-200">
             <div className="flex items-center justify-between mb-5">
               <div>
-                <h3 className="text-xl font-black italic tracking-tight text-slate-900">New Document</h3>
-                <p className="text-xs text-slate-500 mt-0.5">Insert a row into the selected Supabase table</p>
+                <h3 className="text-xl font-black italic tracking-tight text-slate-900">Novo Documento</h3>
+                <p className="text-xs text-slate-500 mt-0.5">Inserir um registro na tabela selecionada do Supabase</p>
               </div>
               <button onClick={() => setOpen(false)} className="text-slate-400 hover:text-slate-700 p-1">
                 <X className="h-5 w-5" />
@@ -80,33 +80,33 @@ export function NewDocumentModal({ defaultTable = "carteira" }: { defaultTable?:
             <div className="space-y-3">
               {table === "carteira" && (
                 <>
-                  <Field label="Product" value={product} onChange={setProduct} />
+                  <Field label="Produto" value={product} onChange={setProduct} />
                   <div className="grid grid-cols-2 gap-3">
-                    <Field label="Qty done" value={qty} onChange={setQty} type="number" />
-                    <Field label="Qty total" value={qtyTotal} onChange={setQtyTotal} type="number" />
+                    <Field label="Qtd. produzida" value={qty} onChange={setQty} type="number" />
+                    <Field label="Qtd. total" value={qtyTotal} onChange={setQtyTotal} type="number" />
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <Select label="Status" value={status} onChange={(v) => setStatus(v as DeliveryStatus)} options={["on-time", "delayed", "critical"]} />
-                    <Field label="Deadline" value={deadline} onChange={setDeadline} type="date" />
+                    <Field label="Prazo" value={deadline} onChange={setDeadline} type="date" />
                   </div>
                 </>
               )}
               {table === "estoque" && (
                 <>
                   <Field label="SKU" value={sku} onChange={setSku} />
-                  <Field label="Product" value={product} onChange={setProduct} />
+                  <Field label="Produto" value={product} onChange={setProduct} />
                   <div className="grid grid-cols-2 gap-3">
-                    <Field label="Quantity" value={qty} onChange={setQty} type="number" />
-                    <Field label="Location" value={location} onChange={setLocation} />
+                    <Field label="Quantidade" value={qty} onChange={setQty} type="number" />
+                    <Field label="Localização" value={location} onChange={setLocation} />
                   </div>
                 </>
               )}
               {table === "faturamento" && (
                 <>
-                  <Field label="Client" value={client} onChange={setClient} />
+                  <Field label="Cliente" value={client} onChange={setClient} />
                   <div className="grid grid-cols-2 gap-3">
-                    <Field label="Category" value={category} onChange={setCategory} />
-                    <Field label="Amount (USD)" value={amount} onChange={setAmount} type="number" />
+                    <Field label="Categoria" value={category} onChange={setCategory} />
+                    <Field label="Valor (R$)" value={amount} onChange={setAmount} type="number" />
                   </div>
                   <Select label="Status" value={finStatus} onChange={(v) => setFinStatus(v as "realized" | "lost" | "projected")} options={["realized", "lost", "projected"]} />
                 </>
@@ -115,10 +115,10 @@ export function NewDocumentModal({ defaultTable = "carteira" }: { defaultTable?:
 
             <div className="flex justify-end gap-2 mt-6">
               <button onClick={() => setOpen(false)} className="px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100">
-                Cancel
+                Cancelar
               </button>
               <button onClick={submit} className="px-4 py-2.5 rounded-xl text-sm font-semibold bg-brand text-white hover:opacity-90 shadow-[0_4px_12px_-2px_rgb(37_99_235_/_0.4)]">
-                Insert into {table}
+                Inserir em {table}
               </button>
             </div>
           </div>

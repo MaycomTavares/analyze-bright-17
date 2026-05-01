@@ -1,27 +1,27 @@
 import { TrendingUp, TrendingDown, Truck, DollarSign, Target, Gauge, Database, ArrowUpRight } from "lucide-react";
-import { Area, AreaChart, CartesianGrid, Legend, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { Card, PageHeader } from "../ui-bits";
 import { NewDocumentModal } from "../new-document-modal";
 import { useAnalizze } from "@/lib/analizze-store";
 import { cn } from "@/lib/utils";
 
 const forecastData = [
-  { m: "Jan", forecast: 420, real: 410 },
-  { m: "Feb", forecast: 460, real: 470 },
-  { m: "Mar", forecast: 500, real: 488 },
-  { m: "Apr", forecast: 540, real: 558 },
-  { m: "May", forecast: 580, real: 565 },
-  { m: "Jun", forecast: 610, real: 632 },
-  { m: "Jul", forecast: 650, real: 670 },
-  { m: "Aug", forecast: 680, real: 695 },
-  { m: "Sep", forecast: 710, real: 702 },
+  { m: "Jan", previsto: 420, real: 410 },
+  { m: "Fev", previsto: 460, real: 470 },
+  { m: "Mar", previsto: 500, real: 488 },
+  { m: "Abr", previsto: 540, real: 558 },
+  { m: "Mai", previsto: 580, real: 565 },
+  { m: "Jun", previsto: 610, real: 632 },
+  { m: "Jul", previsto: 650, real: 670 },
+  { m: "Ago", previsto: 680, real: 695 },
+  { m: "Set", previsto: 710, real: 702 },
 ];
 
 const kpis = [
-  { label: "Efficiency", value: "94.2%", trend: 3.4, up: true, icon: Gauge },
-  { label: "OTIF", value: "88.7%", trend: 1.2, up: true, icon: Truck },
-  { label: "Revenue", value: "$1.84M", trend: 6.8, up: true, icon: DollarSign },
-  { label: "Accuracy", value: "96.1%", trend: -0.4, up: false, icon: Target },
+  { label: "Eficiência", value: "94,2%", trend: 3.4, up: true, icon: Gauge },
+  { label: "OTIF", value: "88,7%", trend: 1.2, up: true, icon: Truck },
+  { label: "Receita", value: "R$ 1,84M", trend: 6.8, up: true, icon: DollarSign },
+  { label: "Acurácia", value: "96,1%", trend: -0.4, up: false, icon: Target },
 ] as const;
 
 export function DashboardPage() {
@@ -30,8 +30,8 @@ export function DashboardPage() {
   return (
     <div>
       <PageHeader
-        title="Dashboard"
-        subtitle="Live operational intelligence — synced from Supabase cluster"
+        title="Painel"
+        subtitle="Inteligência operacional em tempo real — sincronizado com o cluster Supabase"
         actions={<NewDocumentModal />}
       />
 
@@ -62,11 +62,11 @@ export function DashboardPage() {
         <Card className="xl:col-span-2 p-7">
           <div className="flex items-end justify-between mb-5">
             <div>
-              <h3 className="text-lg font-black italic tracking-tight text-slate-900">Forecast vs Real</h3>
-              <p className="text-xs text-slate-500 mt-0.5">Last 9 months · units (k)</p>
+              <h3 className="text-lg font-black italic tracking-tight text-slate-900">Previsto vs Real</h3>
+              <p className="text-xs text-slate-500 mt-0.5">Últimos 9 meses · unidades (mil)</p>
             </div>
             <div className="flex items-center gap-4 text-xs text-slate-600">
-              <span className="inline-flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-brand" /> Forecast</span>
+              <span className="inline-flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-brand" /> Previsto</span>
               <span className="inline-flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-emerald-500" /> Real</span>
             </div>
           </div>
@@ -87,7 +87,7 @@ export function DashboardPage() {
                 <XAxis dataKey="m" stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} />
                 <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} />
                 <Tooltip contentStyle={{ borderRadius: 12, border: "1px solid #e2e8f0", fontSize: 12 }} />
-                <Area type="monotone" dataKey="forecast" stroke="#2563eb" strokeWidth={2.4} fill="url(#g1)" />
+                <Area type="monotone" dataKey="previsto" stroke="#2563eb" strokeWidth={2.4} fill="url(#g1)" />
                 <Area type="monotone" dataKey="real" stroke="#10b981" strokeWidth={2.4} fill="url(#g2)" />
               </AreaChart>
             </ResponsiveContainer>
@@ -97,8 +97,8 @@ export function DashboardPage() {
         <Card className="p-6">
           <div className="flex items-center justify-between mb-5">
             <div>
-              <h3 className="text-lg font-black italic tracking-tight text-slate-900">Recent Movements</h3>
-              <p className="text-xs text-slate-500 mt-0.5">Live Supabase events</p>
+              <h3 className="text-lg font-black italic tracking-tight text-slate-900">Movimentações Recentes</h3>
+              <p className="text-xs text-slate-500 mt-0.5">Eventos do Supabase em tempo real</p>
             </div>
             <Database className="h-4 w-4 text-slate-400" />
           </div>

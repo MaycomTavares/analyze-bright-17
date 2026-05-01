@@ -21,10 +21,10 @@ export function AnalizzeProvider({ children }: { children: ReactNode }) {
   const [estoque, setEstoque] = useState<EstoqueItem[]>(seedEstoque);
   const [faturamento, setFaturamento] = useState<FaturamentoEntry[]>(seedFaturamento);
   const [movements, setMovements] = useState<MovementEvent[]>([
-    { id: id(), table: "carteira", action: "Updated LOT-B71C status → delayed", ts: now() },
-    { id: id(), table: "estoque", action: "Inventory check WH-A completed", ts: now() },
-    { id: id(), table: "faturamento", action: "Invoice FT-1006 marked realized", ts: now() },
-    { id: id(), table: "carteira", action: "New lot LOT-F019 inserted", ts: now() },
+    { id: id(), table: "carteira", action: "Status do LOT-B71C atualizado → atrasado", ts: now() },
+    { id: id(), table: "estoque", action: "Inventário GAL-A concluído", ts: now() },
+    { id: id(), table: "faturamento", action: "Fatura FT-1006 marcada como realizada", ts: now() },
+    { id: id(), table: "carteira", action: "Novo lote LOT-F019 inserido", ts: now() },
   ]);
 
   const pushMovement = useCallback((m: Omit<MovementEvent, "id" | "ts">) => {
@@ -54,15 +54,15 @@ export function AnalizzeProvider({ children }: { children: ReactNode }) {
       toggleSync: () => setSupabaseSync((v) => !v),
       addCarteira: (l) => {
         setCarteira((prev) => [{ id: `LOT-${id()}`, ...l }, ...prev]);
-        pushMovement({ table: "carteira", action: `Inserted lot for ${l.product}` });
+        pushMovement({ table: "carteira", action: `Lote inserido: ${l.product}` });
       },
       addEstoque: (l) => {
         setEstoque((prev) => [{ id: `INV-${id()}`, ...l }, ...prev]);
-        pushMovement({ table: "estoque", action: `Inventory added: ${l.product}` });
+        pushMovement({ table: "estoque", action: `Estoque adicionado: ${l.product}` });
       },
       addFaturamento: (l) => {
         setFaturamento((prev) => [{ id: `FT-${id()}`, ...l }, ...prev]);
-        pushMovement({ table: "faturamento", action: `Invoice for ${l.client} (${l.status})` });
+        pushMovement({ table: "faturamento", action: `Fatura para ${l.client} (${l.status})` });
       },
     }),
     [authed, syncing, supabaseSync, carteira, estoque, faturamento, movements, login, pushMovement],
