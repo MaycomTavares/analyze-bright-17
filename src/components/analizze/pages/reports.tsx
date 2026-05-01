@@ -47,17 +47,17 @@ export function ReportsPage() {
         actions={
           <button
             onClick={downloadCSV}
-            className="inline-flex items-center gap-2 bg-slate-900 text-white text-sm font-semibold px-4 py-2.5 rounded-xl hover:bg-slate-800 transition shadow-sm"
+            className="az-btn group inline-flex items-center gap-2 bg-slate-900 text-white text-sm font-semibold px-4 py-2.5 rounded-xl hover:bg-slate-800 shadow-sm"
           >
-            <Download className="h-4 w-4" /> Baixar Dataset
+            <Download className="h-4 w-4 transition-transform group-hover:translate-y-0.5" /> Baixar Dataset
           </button>
         }
       />
 
       <div className="grid grid-cols-2 xl:grid-cols-4 gap-5 mb-6">
-        {metrics.map((m) => (
-          <Card key={m.label} className="p-6">
-            <m.icon className="h-5 w-5 text-brand mb-5" />
+        {metrics.map((m, i) => (
+          <Card key={m.label} className="p-6" delayClass={`az-delay-${i + 1}`}>
+            <m.icon className="az-card-icon h-5 w-5 text-brand mb-5" />
             <div className="text-[11px] font-semibold tracking-[0.16em] uppercase text-slate-400">{m.label}</div>
             <div className="text-3xl md:text-[32px] font-black italic tracking-tight text-slate-900 mt-1">{m.value}</div>
             <div className="text-[11px] text-slate-500 mt-2">{m.hint}</div>
@@ -65,7 +65,7 @@ export function ReportsPage() {
         ))}
       </div>
 
-      <Card className="p-7">
+      <Card className="p-7 az-slide-left" animate={false}>
         <div className="flex items-end justify-between mb-5">
           <div>
             <h3 className="text-lg font-black italic tracking-tight text-slate-900">Tendência de Erro da Previsão</h3>
