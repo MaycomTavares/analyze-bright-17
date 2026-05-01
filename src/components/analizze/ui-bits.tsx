@@ -6,17 +6,23 @@ export function Card({
   children,
   className,
   hover = true,
+  animate = true,
+  delayClass,
 }: {
   children: ReactNode;
   className?: string;
   hover?: boolean;
+  animate?: boolean;
+  delayClass?: string;
 }) {
   return (
     <div
       className={cn(
-        "bg-white rounded-[32px] border border-slate-100/80 p-6 transition-all duration-300",
+        "bg-white rounded-[32px] border border-slate-100/80 p-6",
         "shadow-[var(--shadow-card)]",
-        hover && "hover:shadow-[var(--shadow-card-hover)] hover:-translate-y-0.5",
+        hover && "az-card",
+        animate && "az-bounce-in",
+        delayClass,
         className,
       )}
     >
@@ -54,7 +60,7 @@ export function StatusBadge({ status }: { status: "on-time" | "delayed" | "criti
   } as const;
   const label = { "on-time": "No prazo", delayed: "Atrasado", critical: "Crítico" }[status];
   return (
-    <span className={cn("inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ring-1", map[status])}>
+    <span className={cn("az-badge inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ring-1 cursor-default", map[status])}>
       <span className={cn(
         "h-1.5 w-1.5 rounded-full",
         status === "on-time" ? "bg-emerald-500" : status === "delayed" ? "bg-amber-500" : "bg-rose-500"
