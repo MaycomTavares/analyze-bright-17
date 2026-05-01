@@ -1,15 +1,22 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useRouterState, type LinkProps } from "@tanstack/react-router";
 import { LayoutDashboard, Truck, Receipt, FileBarChart2, Settings, LogOut, Activity } from "lucide-react";
 import { useAnalizze } from "@/lib/analizze-store";
 import { cn } from "@/lib/utils";
 
-const items = [
+type Item = {
+  to: LinkProps["to"];
+  label: string;
+  icon: typeof LayoutDashboard;
+  exact?: boolean;
+};
+
+const items: Item[] = [
   { to: "/app", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { to: "/app/deliveries", label: "Deliveries", icon: Truck },
   { to: "/app/billing", label: "Billing", icon: Receipt },
   { to: "/app/reports", label: "Reports", icon: FileBarChart2 },
   { to: "/app/settings", label: "Settings", icon: Settings },
-] as const;
+];
 
 export function AnalizzeSidebar() {
   const path = useRouterState({ select: (r) => r.location.pathname });
@@ -43,7 +50,7 @@ export function AnalizzeSidebar() {
 
       <nav className="px-3 flex-1 space-y-1">
         {items.map(({ to, label, icon: Icon, exact }) => {
-          const active = exact ? path === to : path === to || path.startsWith(to + "/");
+          const active = exact ? path === to : path === to || path.startsWith(String(to) + "/");
           return (
             <Link
               key={to}
@@ -93,7 +100,7 @@ export function AnalizzeMobileBar() {
       style={{ background: "oklch(0.145 0.004 285.823 / 0.96)", backdropFilter: "blur(20px)" }}
     >
       {items.map(({ to, label, icon: Icon, exact }) => {
-        const active = exact ? path === to : path === to || path.startsWith(to + "/");
+        const active = exact ? path === to : path === to || path.startsWith(String(to) + "/");
         return (
           <Link key={to} to={to} className={cn(
             "flex flex-col items-center gap-1 px-3 py-1.5 rounded-lg transition",
