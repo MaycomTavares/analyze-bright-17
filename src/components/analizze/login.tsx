@@ -36,21 +36,21 @@ export function LoginScreen() {
           </div>
           <div>
             <div className="font-black italic tracking-tight text-xl leading-none">ANALIZZE</div>
-            <div className="text-[10px] tracking-[0.22em] text-white/40 mt-1 uppercase">Enterprise Intelligence</div>
+            <div className="text-[10px] tracking-[0.22em] text-white/40 mt-1 uppercase">Inteligência Corporativa</div>
           </div>
         </div>
         <div className="hidden lg:block max-w-md">
           <h2 className="text-4xl font-black italic tracking-tight leading-[1.05] mb-4">
-            Real-time decisions.<br />
-            <span className="text-brand-glow">Engineered intelligence.</span>
+            Decisões em tempo real.<br />
+            <span className="text-brand-glow">Inteligência sob medida.</span>
           </h2>
           <p className="text-white/55 text-sm leading-relaxed">
-            Authenticate with your Terminal ID to access live forecasts, delivery control,
-            billing intelligence and synced operational data.
+            Autentique-se com seu Terminal ID para acessar previsões em tempo real,
+            controle de entregas, faturamento e dados operacionais sincronizados.
           </p>
         </div>
         <div className="text-[11px] text-white/30 tracking-wider uppercase">
-          v3.2 · Cluster eu-central-1 · Secured
+          v3.2 · Cluster eu-central-1 · Seguro
         </div>
       </div>
 
@@ -60,9 +60,9 @@ export function LoginScreen() {
           className="w-full max-w-md bg-white/[0.04] backdrop-blur-2xl rounded-3xl p-8 border border-white/10 shadow-2xl"
         >
           <div className="mb-7">
-            <div className="text-[10px] tracking-[0.22em] uppercase text-brand-glow font-semibold">Secure Access</div>
-            <h1 className="text-2xl font-black italic tracking-tight text-white mt-2">Sign in to Cluster</h1>
-            <p className="text-sm text-white/50 mt-1.5">Enter your terminal credentials to continue.</p>
+            <div className="text-[10px] tracking-[0.22em] uppercase text-brand-glow font-semibold">Acesso Seguro</div>
+            <h1 className="text-2xl font-black italic tracking-tight text-white mt-2">Entrar no Cluster</h1>
+            <p className="text-sm text-white/50 mt-1.5">Informe suas credenciais de terminal para continuar.</p>
           </div>
 
           <div className="space-y-4">
@@ -99,12 +99,12 @@ export function LoginScreen() {
               type="submit"
               className="w-full mt-2 inline-flex items-center justify-center gap-2 bg-brand text-white font-semibold py-3 rounded-xl hover:bg-brand-glow transition shadow-[0_8px_24px_-6px_rgb(37_99_235_/_0.6)]"
             >
-              Authenticate <ArrowRight className="h-4 w-4" />
+              Autenticar <ArrowRight className="h-4 w-4" />
             </button>
           </div>
 
           <div className="mt-6 pt-6 border-t border-white/5 flex items-center justify-between text-[11px] text-white/40">
-            <span>End-to-end encrypted</span>
+            <span>Criptografia ponta-a-ponta</span>
             <span className="font-mono">SHA-256 · TLS 1.3</span>
           </div>
         </form>
