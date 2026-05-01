@@ -14,7 +14,7 @@ export function AnalizzeShell({ children }: { children: ReactNode }) {
           <div className="mx-auto mb-6 h-14 w-14 rounded-2xl bg-brand flex items-center justify-center shadow-[0_0_40px_rgb(37_99_235_/_0.6)] animate-pulse">
             <span className="font-black italic text-white text-xl">A</span>
           </div>
-          <Spinner label="Syncing with Supabase Cluster..." />
+          <Spinner label="Sincronizando com o Cluster Supabase..." />
         </div>
       </div>
     );
