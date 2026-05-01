@@ -45,12 +45,12 @@ export function BillingPage() {
       />
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
-        {cards.map((c) => (
-          <Card key={c.label} className="p-7 relative overflow-hidden">
+        {cards.map((c, i) => (
+          <Card key={c.label} className="p-7 relative overflow-hidden" delayClass={`az-delay-${i + 1}`}>
             <div className={`absolute -top-12 -right-12 h-40 w-40 rounded-full bg-gradient-to-br ${c.accent} opacity-[0.08] blur-2xl`} />
             <div className="relative">
               <div className="flex items-center justify-between">
-                <div className={`h-11 w-11 rounded-2xl bg-gradient-to-br ${c.accent} text-white flex items-center justify-center shadow-lg`}>
+                <div className={`az-card-icon h-11 w-11 rounded-2xl bg-gradient-to-br ${c.accent} text-white flex items-center justify-center shadow-lg`}>
                   <c.icon className="h-5 w-5" />
                 </div>
                 <div className={`text-xs font-bold ${c.up ? "text-emerald-600" : "text-rose-600"}`}>{c.trend}</div>
@@ -65,7 +65,7 @@ export function BillingPage() {
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-5">
-        <Card className="xl:col-span-2 p-7">
+        <Card className="xl:col-span-2 p-7 az-slide-left" animate={false}>
           <h3 className="text-lg font-black italic tracking-tight text-slate-900 mb-1">Distribuição por Categoria</h3>
           <p className="text-xs text-slate-500 mb-4">Receita por vertical de mercado</p>
           <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-6">
@@ -93,15 +93,19 @@ export function BillingPage() {
           </div>
         </Card>
 
-        <Card className="p-6">
+        <Card className="p-6 az-slide-right" animate={false}>
           <h3 className="text-lg font-black italic tracking-tight text-slate-900 mb-4">Alertas Financeiros</h3>
           <ul className="space-y-3">
             {alerts.map((a, i) => {
               const Icon = a.type === "warn" ? AlertTriangle : a.type === "ok" ? CheckCircle2 : Info;
               const color = a.type === "warn" ? "text-amber-600 bg-amber-50" : a.type === "ok" ? "text-emerald-600 bg-emerald-50" : "text-brand bg-brand/10";
               return (
-                <li key={i} className="flex items-start gap-3 p-3 rounded-2xl hover:bg-slate-50 transition">
-                  <span className={`h-8 w-8 rounded-xl flex items-center justify-center shrink-0 ${color}`}>
+                <li
+                  key={i}
+                  className="flex items-start gap-3 p-3 rounded-2xl hover:bg-slate-50 transition az-row-in cursor-pointer hover:translate-x-1 duration-300"
+                  style={{ animationDelay: `${i * 80}ms` }}
+                >
+                  <span className={`h-8 w-8 rounded-xl flex items-center justify-center shrink-0 transition-transform hover:scale-110 ${color}`}>
                     <Icon className="h-4 w-4" />
                   </span>
                   <span className="text-sm text-slate-700 leading-snug">{a.text}</span>
