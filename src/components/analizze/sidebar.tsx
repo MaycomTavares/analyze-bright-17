@@ -24,7 +24,7 @@ export function AnalizzeSidebar() {
 
   return (
     <aside
-      className="hidden md:flex flex-col w-64 shrink-0 h-screen sticky top-0 text-sidebar-fg"
+      className="hidden md:flex flex-col w-64 shrink-0 h-screen sticky top-0 text-sidebar-fg az-slide-left"
       style={{
         background:
           "linear-gradient(180deg, oklch(0.16 0.005 285) 0%, oklch(0.12 0.004 285) 100%)",
@@ -33,8 +33,8 @@ export function AnalizzeSidebar() {
       }}
     >
       <div className="px-6 pt-7 pb-8">
-        <div className="flex items-center gap-2.5">
-          <div className="h-9 w-9 rounded-xl flex items-center justify-center bg-brand shadow-[0_0_20px_-2px_rgb(37_99_235_/_0.7)]">
+        <div className="flex items-center gap-2.5 group cursor-pointer">
+          <div className="az-logo-spin h-9 w-9 rounded-xl flex items-center justify-center bg-brand shadow-[0_0_20px_-2px_rgb(37_99_235_/_0.7)]">
             <Activity className="h-5 w-5 text-white" strokeWidth={2.5} />
           </div>
           <div>
@@ -49,21 +49,22 @@ export function AnalizzeSidebar() {
       </div>
 
       <nav className="px-3 flex-1 space-y-1">
-        {items.map(({ to, label, icon: Icon, exact }) => {
+        {items.map(({ to, label, icon: Icon, exact }, i) => {
           const active = exact ? path === to : path === to || path.startsWith(String(to) + "/");
           return (
             <Link
               key={to}
               to={to}
               className={cn(
-                "group relative flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium transition-all duration-200",
+                "az-nav-item group relative flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium az-fade-up",
+                `az-delay-${Math.min(i + 1, 6)}`,
                 active
-                  ? "bg-brand text-white shadow-[var(--shadow-glow-blue)]"
+                  ? "az-nav-active bg-brand text-white shadow-[var(--shadow-glow-blue)]"
                   : "text-white/60 hover:text-white hover:bg-white/5",
               )}
             >
-              <Icon className="h-[18px] w-[18px]" strokeWidth={active ? 2.4 : 2} />
-              <span>{label}</span>
+              <Icon className={cn("h-[18px] w-[18px] transition-transform duration-300", "group-hover:scale-110")} strokeWidth={active ? 2.4 : 2} />
+              <span className="relative">{label}</span>
               {active && (
                 <span className="absolute right-0 top-1/2 -translate-y-1/2 h-6 w-[3px] rounded-l-full bg-white/90" />
               )}
@@ -82,7 +83,7 @@ export function AnalizzeSidebar() {
         </div>
         <button
           onClick={logout}
-          className="w-full flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-white/60 hover:text-white hover:bg-white/5 transition"
+          className="az-btn w-full flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-white/60 hover:text-white hover:bg-white/5"
         >
           <LogOut className="h-4 w-4" />
           Sair
