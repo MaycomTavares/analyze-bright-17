@@ -36,10 +36,10 @@ export function DashboardPage() {
       />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 mb-6">
-        {kpis.map((k) => (
-          <Card key={k.label} className="p-6">
+        {kpis.map((k, i) => (
+          <Card key={k.label} className="p-6" delayClass={`az-delay-${i + 1}`}>
             <div className="flex items-start justify-between">
-              <div className="h-11 w-11 rounded-2xl bg-slate-50 flex items-center justify-center">
+              <div className="az-card-icon h-11 w-11 rounded-2xl bg-slate-50 flex items-center justify-center">
                 <k.icon className="h-5 w-5 text-slate-700" />
               </div>
               <div className={cn(
@@ -59,7 +59,7 @@ export function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-5">
-        <Card className="xl:col-span-2 p-7">
+        <Card className="xl:col-span-2 p-7 az-slide-left" animate={false}>
           <div className="flex items-end justify-between mb-5">
             <div>
               <h3 className="text-lg font-black italic tracking-tight text-slate-900">Previsto vs Real</h3>
@@ -94,7 +94,7 @@ export function DashboardPage() {
           </div>
         </Card>
 
-        <Card className="p-6">
+        <Card className="p-6 az-slide-right" animate={false}>
           <div className="flex items-center justify-between mb-5">
             <div>
               <h3 className="text-lg font-black italic tracking-tight text-slate-900">Movimentações Recentes</h3>
@@ -103,8 +103,12 @@ export function DashboardPage() {
             <Database className="h-4 w-4 text-slate-400" />
           </div>
           <ul className="space-y-3">
-            {movements.slice(0, 7).map((m) => (
-              <li key={m.id} className="flex items-start gap-3 group">
+            {movements.slice(0, 7).map((m, i) => (
+              <li
+                key={m.id}
+                className="flex items-start gap-3 group az-row-in p-2 -mx-2 rounded-xl hover:bg-slate-50 transition cursor-pointer"
+                style={{ animationDelay: `${i * 70}ms` }}
+              >
                 <div className={cn(
                   "mt-1 h-2 w-2 rounded-full shrink-0",
                   m.table === "carteira" ? "bg-brand" : m.table === "estoque" ? "bg-amber-500" : "bg-emerald-500"
@@ -117,7 +121,7 @@ export function DashboardPage() {
                     <span className="text-[10px] text-slate-400">{new Date(m.ts).toLocaleTimeString()}</span>
                   </div>
                 </div>
-                <ArrowUpRight className="h-3.5 w-3.5 text-slate-300 group-hover:text-brand transition" />
+                <ArrowUpRight className="h-3.5 w-3.5 text-slate-300 group-hover:text-brand group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
               </li>
             ))}
           </ul>
