@@ -1,28 +1,72 @@
-import { TrendingUp, TrendingDown, Truck, DollarSign, Target, Gauge, Database, ArrowUpRight } from "lucide-react";
-import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Target, Package, DollarSign, TrendingUp, Database, ArrowUpRight } from "lucide-react";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Legend,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 import { Card, PageHeader } from "../ui-bits";
 import { NewDocumentModal } from "../new-document-modal";
 import { useAnalizze } from "@/lib/analizze-store";
 import { cn } from "@/lib/utils";
 
-const forecastData = [
-  { m: "Jan", previsto: 420, real: 410 },
-  { m: "Fev", previsto: 460, real: 470 },
-  { m: "Mar", previsto: 500, real: 488 },
-  { m: "Abr", previsto: 540, real: 558 },
-  { m: "Mai", previsto: 580, real: 565 },
-  { m: "Jun", previsto: 610, real: 632 },
-  { m: "Jul", previsto: 650, real: 670 },
-  { m: "Ago", previsto: 680, real: 695 },
-  { m: "Set", previsto: 710, real: 702 },
+const weeklyData = [
+  { sem: "Sem 1", previsto: 1200, realizado: 1140 },
+  { sem: "Sem 2", previsto: 1320, realizado: 1280 },
+  { sem: "Sem 3", previsto: 1260, realizado: 1190 },
+  { sem: "Sem 4", previsto: 1420, realizado: 1440 },
+];
+
+const trendData = [
+  { m: "Jan", reais: 5300, previsao: 5200 },
+  { m: "Fev", reais: 5450, previsao: 5380 },
+  { m: "Mar", reais: 5260, previsao: 5310 },
+  { m: "Abr", reais: 5780, previsao: 5710 },
+  { m: "Mai", reais: 6020, previsao: 6080 },
 ];
 
 const kpis = [
-  { label: "Eficiência", value: "94,2%", trend: 3.4, up: true, icon: Gauge },
-  { label: "OTIF", value: "88,7%", trend: 1.2, up: true, icon: Truck },
-  { label: "Receita", value: "R$ 1,84M", trend: 6.8, up: true, icon: DollarSign },
-  { label: "Acurácia", value: "96,1%", trend: -0.4, up: false, icon: Target },
+  {
+    label: "Aderência da Produção",
+    value: "92%",
+    hint: "Peças entregues vs forecast do mês",
+    icon: Target,
+    tone: "blue",
+  },
+  {
+    label: "Previsão Próximo Mês",
+    value: "5.900",
+    hint: "Unidades previstas para junho",
+    icon: Package,
+    tone: "emerald",
+  },
+  {
+    label: "Faturamento Projetado",
+    value: "R$ 412k",
+    hint: "Baseado no forecast atual",
+    icon: DollarSign,
+    tone: "violet",
+  },
+  {
+    label: "Acurácia do Modelo (MAPE)",
+    value: "95%",
+    hint: "Taxa de acerto da previsão",
+    icon: TrendingUp,
+    tone: "emerald",
+  },
 ] as const;
+
+const toneMap: Record<string, string> = {
+  blue: "bg-brand text-white shadow-[0_8px_20px_-6px_rgba(37,99,235,0.55)]",
+  emerald: "bg-emerald-500 text-white shadow-[0_8px_20px_-6px_rgba(16,185,129,0.55)]",
+  violet: "bg-violet-500 text-white shadow-[0_8px_20px_-6px_rgba(139,92,246,0.55)]",
+};
 
 export function DashboardPage() {
   const { movements } = useAnalizze();
@@ -38,71 +82,100 @@ export function DashboardPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 mb-6">
         {kpis.map((k, i) => (
           <Card key={k.label} className="p-6" delayClass={`az-delay-${i + 1}`}>
-            <div className="flex items-start justify-between">
-              <div className="az-card-icon h-11 w-11 rounded-2xl bg-slate-50 flex items-center justify-center">
-                <k.icon className="h-5 w-5 text-slate-700" />
-              </div>
+            <div className="flex items-start justify-between gap-3">
+              <div className="text-sm text-slate-500 leading-snug">{k.label}</div>
               <div className={cn(
-                "inline-flex items-center gap-1 text-[11px] font-bold px-2 py-1 rounded-full",
-                k.up ? "text-emerald-700 bg-emerald-50" : "text-rose-700 bg-rose-50"
+                "az-card-icon h-11 w-11 rounded-2xl flex items-center justify-center shrink-0",
+                toneMap[k.tone],
               )}>
-                {k.up ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
-                {k.up ? "+" : ""}{k.trend}%
+                <k.icon className="h-5 w-5" />
               </div>
             </div>
-            <div className="mt-5">
-              <div className="text-[11px] font-semibold tracking-[0.16em] uppercase text-slate-400">{k.label}</div>
-              <div className="text-3xl md:text-[34px] font-black italic tracking-tight text-slate-900 mt-1.5">{k.value}</div>
+            <div className="text-4xl md:text-[42px] font-black italic tracking-tight text-slate-900 mt-3 leading-none">
+              {k.value}
             </div>
+            <div className="text-xs text-slate-500 mt-3">{k.hint}</div>
           </Card>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-5">
-        <Card className="xl:col-span-2 p-7 az-slide-left" animate={false}>
-          <div className="flex items-end justify-between mb-5">
-            <div>
-              <h3 className="text-lg font-black italic tracking-tight text-slate-900">Previsto vs Real</h3>
-              <p className="text-xs text-slate-500 mt-0.5">Últimos 9 meses · unidades (mil)</p>
-            </div>
-            <div className="flex items-center gap-4 text-xs text-slate-600">
-              <span className="inline-flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-brand" /> Previsto</span>
-              <span className="inline-flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-emerald-500" /> Real</span>
-            </div>
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-5 mb-5">
+        <Card className="p-7 az-slide-left" animate={false}>
+          <div className="mb-5">
+            <h3 className="text-lg font-bold tracking-tight text-slate-900">Produção Realizada vs Forecast</h3>
+            <p className="text-xs text-slate-500 mt-0.5">Comparativo semanal</p>
           </div>
-          <div className="h-[280px]">
+          <div className="h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={forecastData}>
-                <defs>
-                  <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#2563eb" stopOpacity={0.32} />
-                    <stop offset="100%" stopColor="#2563eb" stopOpacity={0} />
-                  </linearGradient>
-                  <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#10b981" stopOpacity={0.28} />
-                    <stop offset="100%" stopColor="#10b981" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
+              <BarChart data={weeklyData} barCategoryGap="22%">
                 <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
-                <XAxis dataKey="m" stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} />
-                <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} />
+                <XAxis dataKey="sem" stroke="#64748b" fontSize={12} tickLine={false} axisLine={false} />
+                <YAxis stroke="#64748b" fontSize={12} tickLine={false} axisLine={false} />
                 <Tooltip contentStyle={{ borderRadius: 12, border: "1px solid #e2e8f0", fontSize: 12 }} />
-                <Area type="monotone" dataKey="previsto" stroke="#2563eb" strokeWidth={2.4} fill="url(#g1)" />
-                <Area type="monotone" dataKey="real" stroke="#10b981" strokeWidth={2.4} fill="url(#g2)" />
-              </AreaChart>
+                <Legend
+                  iconType="circle"
+                  wrapperStyle={{ fontSize: 12, paddingTop: 12 }}
+                  formatter={(v) => <span className="text-slate-600">{v === "previsto" ? "Forecast" : "Realizado"}</span>}
+                />
+                <Bar dataKey="previsto" name="previsto" fill="#2563eb" radius={[8, 8, 0, 0]} />
+                <Bar dataKey="realizado" name="realizado" fill="#10b981" radius={[8, 8, 0, 0]} />
+              </BarChart>
             </ResponsiveContainer>
           </div>
         </Card>
 
-        <Card className="p-6 az-slide-right" animate={false}>
+        <Card className="p-7 az-slide-right" animate={false}>
+          <div className="mb-5">
+            <h3 className="text-lg font-bold tracking-tight text-slate-900">Tendência de Vendas e Previsão</h3>
+            <p className="text-xs text-slate-500 mt-0.5">Histórico dos últimos 5 meses</p>
+          </div>
+          <div className="h-[300px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={trendData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
+                <XAxis dataKey="m" stroke="#64748b" fontSize={12} tickLine={false} axisLine={false} />
+                <YAxis stroke="#64748b" fontSize={12} tickLine={false} axisLine={false} />
+                <Tooltip contentStyle={{ borderRadius: 12, border: "1px solid #e2e8f0", fontSize: 12 }} />
+                <Legend
+                  iconType="circle"
+                  wrapperStyle={{ fontSize: 12, paddingTop: 12 }}
+                  formatter={(v) => <span className="text-slate-600">{v === "reais" ? "Vendas Reais" : "Previsão"}</span>}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="reais"
+                  name="reais"
+                  stroke="#2563eb"
+                  strokeWidth={2.6}
+                  dot={{ r: 4, fill: "#2563eb" }}
+                  activeDot={{ r: 6 }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="previsao"
+                  name="previsao"
+                  stroke="#10b981"
+                  strokeWidth={2.6}
+                  strokeDasharray="6 5"
+                  dot={{ r: 4, fill: "#10b981" }}
+                  activeDot={{ r: 6 }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </Card>
+      </div>
+
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-5">
+        <Card className="xl:col-span-3 p-6 az-slide-right" animate={false}>
           <div className="flex items-center justify-between mb-5">
             <div>
-              <h3 className="text-lg font-black italic tracking-tight text-slate-900">Movimentações Recentes</h3>
+              <h3 className="text-lg font-bold tracking-tight text-slate-900">Movimentações Recentes</h3>
               <p className="text-xs text-slate-500 mt-0.5">Eventos do Supabase em tempo real</p>
             </div>
             <Database className="h-4 w-4 text-slate-400" />
           </div>
-          <ul className="space-y-3">
+          <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
             {movements.slice(0, 7).map((m, i) => (
               <li
                 key={m.id}
