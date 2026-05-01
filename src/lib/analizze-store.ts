@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import { createContext, useContext } from "react";
 
 export type DeliveryStatus = "on-time" | "delayed" | "critical";
 
@@ -35,7 +35,7 @@ export interface MovementEvent {
   ts: string;
 }
 
-interface State {
+export interface AnalizzeState {
   authed: boolean;
   syncing: boolean;
   supabaseSync: boolean;
@@ -51,10 +51,10 @@ interface State {
   addFaturamento: (l: Omit<FaturamentoEntry, "id">) => void;
 }
 
-const id = () => Math.random().toString(36).slice(2, 8).toUpperCase();
-const now = () => new Date().toISOString();
+export const id = () => Math.random().toString(36).slice(2, 8).toUpperCase();
+export const now = () => new Date().toISOString();
 
-const seedCarteira: CarteiraLot[] = [
+export const seedCarteira: CarteiraLot[] = [
   { id: "LOT-A0F2", product: "Industrial Bearing 6204-2RS", qtyDone: 820, qtyTotal: 1000, status: "on-time", deadline: "2026-05-12" },
   { id: "LOT-B71C", product: "Hydraulic Cylinder HC-220", qtyDone: 140, qtyTotal: 500, status: "delayed", deadline: "2026-05-04" },
   { id: "LOT-C9D3", product: "Servo Motor SM-7K", qtyDone: 45, qtyTotal: 300, status: "critical", deadline: "2026-05-02" },
@@ -63,13 +63,13 @@ const seedCarteira: CarteiraLot[] = [
   { id: "LOT-F019", product: "Aluminum Frame AF-90", qtyDone: 410, qtyTotal: 450, status: "on-time", deadline: "2026-05-15" },
 ];
 
-const seedEstoque: EstoqueItem[] = [
+export const seedEstoque: EstoqueItem[] = [
   { id: "INV-001", sku: "SKU-44021", product: "Steel Rod 12mm", qty: 1240, location: "WH-A / R3" },
   { id: "INV-002", sku: "SKU-44022", product: "Copper Coil 0.5mm", qty: 560, location: "WH-A / R7" },
   { id: "INV-003", sku: "SKU-44023", product: "Polymer Resin", qty: 88, location: "WH-B / R1" },
 ];
 
-const seedFaturamento: FaturamentoEntry[] = [
+export const seedFaturamento: FaturamentoEntry[] = [
   { id: "FT-1001", client: "Volkfeld GmbH", category: "Automotive", amount: 184230, status: "realized", date: "2026-04-22" },
   { id: "FT-1002", client: "Northwind Energy", category: "Energy", amount: 92500, status: "realized", date: "2026-04-25" },
   { id: "FT-1003", client: "Atlas Robotics", category: "Robotics", amount: 56800, status: "projected", date: "2026-05-05" },
@@ -78,41 +78,10 @@ const seedFaturamento: FaturamentoEntry[] = [
   { id: "FT-1006", client: "Cobalt Mining Co.", category: "Mining", amount: 128900, status: "realized", date: "2026-04-28" },
 ];
 
-export const useAnalizze = create<State>((set, get) => ({
-  authed: false,
-  syncing: false,
-  supabaseSync: true,
-  carteira: seedCarteira,
-  estoque: seedEstoque,
-  faturamento: seedFaturamento,
-  movements: [
-    { id: id(), table: "carteira", action: "Updated LOT-B71C status → delayed", ts: now() },
-    { id: id(), table: "estoque", action: "Inventory check WH-A completed", ts: now() },
-    { id: id(), table: "faturamento", action: "Invoice FT-1006 marked realized", ts: now() },
-    { id: id(), table: "carteira", action: "New lot LOT-F019 inserted", ts: now() },
-  ],
-  login: async (terminal, secret) => {
-    if (!terminal || !secret) return false;
-    set({ syncing: true });
-    await new Promise((r) => setTimeout(r, 1400));
-    set({ syncing: false, authed: true });
-    return true;
-  },
-  logout: () => set({ authed: false }),
-  toggleSync: () => set({ supabaseSync: !get().supabaseSync }),
-  addCarteira: (l) =>
-    set((s) => ({
-      carteira: [{ id: `LOT-${id()}`, ...l }, ...s.carteira],
-      movements: [{ id: id(), table: "carteira", action: `Inserted lot for ${l.product}`, ts: now() }, ...s.movements].slice(0, 12),
-    })),
-  addEstoque: (l) =>
-    set((s) => ({
-      estoque: [{ id: `INV-${id()}`, ...l }, ...s.estoque],
-      movements: [{ id: id(), table: "estoque", action: `Inventory added: ${l.product}`, ts: now() }, ...s.movements].slice(0, 12),
-    })),
-  addFaturamento: (l) =>
-    set((s) => ({
-      faturamento: [{ id: `FT-${id()}`, ...l }, ...s.faturamento],
-      movements: [{ id: id(), table: "faturamento", action: `Invoice for ${l.client} (${l.status})`, ts: now() }, ...s.movements].slice(0, 12),
-    })),
-}));
+export const AnalizzeContext = createContext<AnalizzeState | null>(null);
+
+export function useAnalizze(): AnalizzeState {
+  const ctx = useContext(AnalizzeContext);
+  if (!ctx) throw new Error("useAnalizze must be used inside AnalizzeProvider");
+  return ctx;
+}
