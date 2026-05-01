@@ -12,7 +12,7 @@ export function LoginScreen() {
     e.preventDefault();
     setErr("");
     const ok = await login(terminal, secret);
-    if (!ok) setErr("Invalid Terminal ID or Secret Key.");
+    if (!ok) setErr("Terminal ID ou Secret Key inválidos.");
   };
 
   return (
