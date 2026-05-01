@@ -177,3 +177,120 @@
     color: var(--color-foreground);
   }
 }
+
+/* ============================================================
+ * ANALIZZE — Animations & micro-interactions
+ * ============================================================ */
+@keyframes az-fade-up {
+  0%   { opacity: 0; transform: translateY(14px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes az-fade-in {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes az-slide-left {
+  0%   { opacity: 0; transform: translateX(-28px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+@keyframes az-slide-right {
+  0%   { opacity: 0; transform: translateX(28px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+@keyframes az-bounce-in {
+  0%   { opacity: 0; transform: scale(0.86) translateY(18px); }
+  60%  { opacity: 1; transform: scale(1.04) translateY(-4px); }
+  80%  { transform: scale(0.98) translateY(2px); }
+  100% { transform: scale(1) translateY(0); }
+}
+@keyframes az-scale-in {
+  0%   { opacity: 0; transform: scale(0.92); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes az-row-in {
+  0%   { opacity: 0; transform: translateY(6px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes az-spin-slow {
+  to { transform: rotate(360deg); }
+}
+@keyframes az-pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgb(37 99 235 / 0.45); }
+  50%      { box-shadow: 0 0 0 12px rgb(37 99 235 / 0); }
+}
+
+.az-fade-up        { animation: az-fade-up 0.55s cubic-bezier(0.22,1,0.36,1) both; }
+.az-fade-in        { animation: az-fade-in 0.4s ease-out both; }
+.az-slide-left     { animation: az-slide-left 0.55s cubic-bezier(0.22,1,0.36,1) both; }
+.az-slide-right    { animation: az-slide-right 0.55s cubic-bezier(0.22,1,0.36,1) both; }
+.az-bounce-in      { animation: az-bounce-in 0.7s cubic-bezier(0.34,1.56,0.64,1) both; }
+.az-scale-in       { animation: az-scale-in 0.35s cubic-bezier(0.22,1,0.36,1) both; }
+.az-row-in         { animation: az-row-in 0.4s ease-out both; }
+.az-pulse-glow     { animation: az-pulse-glow 2.4s ease-in-out infinite; }
+
+/* Card lift — stronger hover with smooth easing */
+.az-card {
+  transition: transform 0.35s cubic-bezier(0.22,1,0.36,1),
+              box-shadow 0.35s cubic-bezier(0.22,1,0.36,1),
+              border-color 0.35s ease;
+  will-change: transform;
+}
+.az-card:hover {
+  transform: translateY(-6px) scale(1.005);
+  box-shadow: 0 22px 48px -16px rgb(15 23 42 / 0.18),
+              0 8px 18px -8px rgb(15 23 42 / 0.10);
+  border-color: rgb(226 232 240);
+}
+.az-card:hover .az-card-icon {
+  transform: rotate(360deg);
+}
+.az-card-icon {
+  transition: transform 0.7s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+/* Logo spin on hover */
+.az-logo-spin {
+  transition: transform 0.6s cubic-bezier(0.34,1.56,0.64,1);
+}
+.az-logo-spin:hover {
+  transform: rotate(360deg) scale(1.05);
+}
+
+/* Sidebar nav item slide-in on hover */
+.az-nav-item {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+}
+.az-nav-item::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgb(255 255 255 / 0.06), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.45s cubic-bezier(0.22,1,0.36,1);
+}
+.az-nav-item:hover::before { transform: translateX(0); }
+.az-nav-item:hover:not(.az-nav-active) { transform: translateX(4px); }
+
+/* Universal button feedback */
+.az-btn {
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background-color 0.2s ease, opacity 0.2s ease;
+}
+.az-btn:hover    { transform: translateY(-1px); }
+.az-btn:active   { transform: scale(0.94); }
+
+/* Status badge hover */
+.az-badge {
+  transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease;
+}
+.az-badge:hover { transform: scale(1.08); }
+
+/* Sequential delays */
+.az-delay-1 { animation-delay: 60ms; }
+.az-delay-2 { animation-delay: 120ms; }
+.az-delay-3 { animation-delay: 180ms; }
+.az-delay-4 { animation-delay: 240ms; }
+.az-delay-5 { animation-delay: 300ms; }
+.az-delay-6 { animation-delay: 360ms; }
+.az-delay-7 { animation-delay: 420ms; }
+.az-delay-8 { animation-delay: 480ms; }
