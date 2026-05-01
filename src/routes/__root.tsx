@@ -33,10 +33,14 @@ export const Route = createRootRoute({
       { name: "description", content: "ANALIZZE — Painel de inteligência corporativa para previsões, entregas, faturamento e relatórios." },
       { name: "author", content: "ANALIZZE" },
       { property: "og:title", content: "ANALIZZE — Inteligência Corporativa" },
-      { property: "og:description", content: "Painel de inteligência corporativa com previsões, entregas, faturamento e relatórios." },
+      { property: "og:description", content: "ANALIZZE — Painel de inteligência corporativa para previsões, entregas, faturamento e relatórios." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "ANALIZZE — Inteligência Corporativa" },
+      { name: "twitter:description", content: "ANALIZZE — Painel de inteligência corporativa para previsões, entregas, faturamento e relatórios." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/93633a0e-0cff-46ad-92cd-815298a00d85/id-preview-388d8b27--493a328e-6f74-4f13-95da-9bac518cc38a.lovable.app-1777658930800.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/93633a0e-0cff-46ad-92cd-815298a00d85/id-preview-388d8b27--493a328e-6f74-4f13-95da-9bac518cc38a.lovable.app-1777658930800.png" },
     ],
     links: [
       {
