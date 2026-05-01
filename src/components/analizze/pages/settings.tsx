@@ -17,7 +17,7 @@ export function SettingsPage() {
 
   return (
     <div>
-      <PageHeader title="Settings" subtitle="Cluster sync & integration credentials" />
+      <PageHeader title="Configurações" subtitle="Sincronização do cluster e credenciais de integração" />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         <Card className="p-7">
@@ -26,9 +26,9 @@ export function SettingsPage() {
               <Database className="h-5 w-5" />
             </div>
             <div className="flex-1">
-              <h3 className="font-black italic tracking-tight text-slate-900 text-lg">Supabase Sync</h3>
+              <h3 className="font-black italic tracking-tight text-slate-900 text-lg">Sincronização Supabase</h3>
               <p className="text-sm text-slate-500 mt-1 leading-relaxed">
-                When enabled, every insert and update streams to your Supabase cluster in real time.
+                Quando ativada, cada inserção ou atualização é enviada ao seu cluster Supabase em tempo real.
               </p>
             </div>
             <button
@@ -42,9 +42,9 @@ export function SettingsPage() {
           </div>
 
           <div className="mt-6 grid grid-cols-3 gap-3 pt-6 border-t border-slate-100">
-            <Stat label="Tables" value="3" />
-            <Stat label="Region" value="eu-c1" />
-            <Stat label="Latency" value="42ms" />
+            <Stat label="Tabelas" value="3" />
+            <Stat label="Região" value="eu-c1" />
+            <Stat label="Latência" value="42ms" />
           </div>
         </Card>
 
@@ -54,8 +54,8 @@ export function SettingsPage() {
               <Key className="h-5 w-5" />
             </div>
             <div className="flex-1">
-              <h3 className="font-black italic tracking-tight text-slate-900 text-lg">API Keys</h3>
-              <p className="text-sm text-slate-500 mt-1">Manage your project & service-role keys.</p>
+              <h3 className="font-black italic tracking-tight text-slate-900 text-lg">Chaves de API</h3>
+              <p className="text-sm text-slate-500 mt-1">Gerencie as chaves do projeto e service-role.</p>
             </div>
             <button onClick={() => setShow((s) => !s)} className="text-slate-400 hover:text-slate-700 p-1">
               {show ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -63,19 +63,19 @@ export function SettingsPage() {
           </div>
 
           <div className="space-y-4">
-            <KeyField label="Project Anon Key" value={apiKey} onChange={setApiKey} masked={!show} />
-            <KeyField label="Service Role Key" value={serviceKey} onChange={setServiceKey} masked={!show} />
+            <KeyField label="Chave Anon do Projeto" value={apiKey} onChange={setApiKey} masked={!show} />
+            <KeyField label="Chave Service Role" value={serviceKey} onChange={setServiceKey} masked={!show} />
           </div>
 
           <div className="flex justify-between items-center mt-6 pt-6 border-t border-slate-100">
             <button className="text-xs text-slate-500 inline-flex items-center gap-1.5 hover:text-slate-800">
-              <RefreshCw className="h-3.5 w-3.5" /> Rotate keys
+              <RefreshCw className="h-3.5 w-3.5" /> Rotacionar chaves
             </button>
             <button
               onClick={save}
               className="inline-flex items-center gap-2 bg-brand text-white text-sm font-semibold px-4 py-2 rounded-xl hover:opacity-90 transition shadow-[0_4px_12px_-2px_rgb(37_99_235_/_0.4)]"
             >
-              {saved ? <><Check className="h-4 w-4" /> Saved</> : "Save changes"}
+              {saved ? <><Check className="h-4 w-4" /> Salvo</> : "Salvar alterações"}
             </button>
           </div>
         </Card>
