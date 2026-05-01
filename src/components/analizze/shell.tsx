@@ -1,4 +1,5 @@
 import { type ReactNode } from "react";
+import { useRouterState } from "@tanstack/react-router";
 import { useAnalizze } from "@/lib/analizze-store";
 import { AnalizzeSidebar, AnalizzeMobileBar } from "./sidebar";
 import { LoginScreen } from "./login";
@@ -6,6 +7,7 @@ import { Spinner } from "./ui-bits";
 
 export function AnalizzeShell({ children }: { children: ReactNode }) {
   const { authed, syncing } = useAnalizze();
+  const path = useRouterState({ select: (r) => r.location.pathname });
 
   if (syncing && !authed) {
     return (
@@ -25,8 +27,10 @@ export function AnalizzeShell({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-screen flex bg-surface">
       <AnalizzeSidebar />
-      <main className="flex-1 min-w-0 px-5 md:px-10 py-8 pb-24 md:pb-10 animate-in fade-in duration-300">
-        {children}
+      <main className="flex-1 min-w-0 px-5 md:px-10 py-8 pb-24 md:pb-10">
+        <div key={path} className="az-fade-up">
+          {children}
+        </div>
       </main>
       <AnalizzeMobileBar />
     </div>
