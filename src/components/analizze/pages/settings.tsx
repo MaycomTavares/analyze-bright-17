@@ -20,9 +20,9 @@ export function SettingsPage() {
       <PageHeader title="Configurações" subtitle="Sincronização do cluster e credenciais de integração" />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        <Card className="p-7">
+        <Card className="p-7" delayClass="az-delay-1">
           <div className="flex items-start gap-4">
-            <div className="h-11 w-11 rounded-2xl bg-brand/10 text-brand flex items-center justify-center">
+            <div className="az-card-icon h-11 w-11 rounded-2xl bg-brand/10 text-brand flex items-center justify-center">
               <Database className="h-5 w-5" />
             </div>
             <div className="flex-1">
@@ -35,9 +35,9 @@ export function SettingsPage() {
               role="switch"
               aria-checked={supabaseSync}
               onClick={toggleSync}
-              className={`relative h-7 w-12 rounded-full transition shrink-0 ${supabaseSync ? "bg-brand" : "bg-slate-300"}`}
+              className={`az-btn relative h-7 w-12 rounded-full shrink-0 ${supabaseSync ? "bg-brand" : "bg-slate-300"}`}
             >
-              <span className={`absolute top-1 left-1 h-5 w-5 rounded-full bg-white shadow transition-transform ${supabaseSync ? "translate-x-5" : ""}`} />
+              <span className={`absolute top-1 left-1 h-5 w-5 rounded-full bg-white shadow transition-transform duration-300 ${supabaseSync ? "translate-x-5" : ""}`} />
             </button>
           </div>
 
@@ -48,16 +48,16 @@ export function SettingsPage() {
           </div>
         </Card>
 
-        <Card className="p-7">
+        <Card className="p-7" delayClass="az-delay-2">
           <div className="flex items-start gap-4 mb-5">
-            <div className="h-11 w-11 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center">
+            <div className="az-card-icon h-11 w-11 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center">
               <Key className="h-5 w-5" />
             </div>
             <div className="flex-1">
               <h3 className="font-black italic tracking-tight text-slate-900 text-lg">Chaves de API</h3>
               <p className="text-sm text-slate-500 mt-1">Gerencie as chaves do projeto e service-role.</p>
             </div>
-            <button onClick={() => setShow((s) => !s)} className="text-slate-400 hover:text-slate-700 p-1">
+            <button onClick={() => setShow((s) => !s)} className="az-btn text-slate-400 hover:text-slate-700 p-1">
               {show ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
             </button>
           </div>
@@ -68,14 +68,14 @@ export function SettingsPage() {
           </div>
 
           <div className="flex justify-between items-center mt-6 pt-6 border-t border-slate-100">
-            <button className="text-xs text-slate-500 inline-flex items-center gap-1.5 hover:text-slate-800">
-              <RefreshCw className="h-3.5 w-3.5" /> Rotacionar chaves
+            <button className="az-btn group text-xs text-slate-500 inline-flex items-center gap-1.5 hover:text-slate-800">
+              <RefreshCw className="h-3.5 w-3.5 transition-transform duration-500 group-hover:rotate-180" /> Rotacionar chaves
             </button>
             <button
               onClick={save}
-              className="inline-flex items-center gap-2 bg-brand text-white text-sm font-semibold px-4 py-2 rounded-xl hover:opacity-90 transition shadow-[0_4px_12px_-2px_rgb(37_99_235_/_0.4)]"
+              className="az-btn inline-flex items-center gap-2 bg-brand text-white text-sm font-semibold px-4 py-2 rounded-xl hover:opacity-90 shadow-[0_4px_12px_-2px_rgb(37_99_235_/_0.4)]"
             >
-              {saved ? <><Check className="h-4 w-4" /> Salvo</> : "Salvar alterações"}
+              {saved ? <span className="inline-flex items-center gap-1.5 az-scale-in"><Check className="h-4 w-4" /> Salvo</span> : "Salvar alterações"}
             </button>
           </div>
         </Card>
