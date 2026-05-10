@@ -13,6 +13,8 @@ import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppSettingsRouteImport } from './routes/app.settings'
+import { Route as AppPlanningRouteImport } from './routes/app.planning'
+import { Route as AppInventoryRouteImport } from './routes/app.inventory'
 import { Route as AppForecastRouteImport } from './routes/app.forecast'
 import { Route as AppDeliveriesRouteImport } from './routes/app.deliveries'
 import { Route as AppBillingRouteImport } from './routes/app.billing'
@@ -37,6 +39,16 @@ const AppSettingsRoute = AppSettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => AppRoute,
 } as any)
+const AppPlanningRoute = AppPlanningRouteImport.update({
+  id: '/planning',
+  path: '/planning',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppInventoryRoute = AppInventoryRouteImport.update({
+  id: '/inventory',
+  path: '/inventory',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppForecastRoute = AppForecastRouteImport.update({
   id: '/forecast',
   path: '/forecast',
@@ -59,6 +71,8 @@ export interface FileRoutesByFullPath {
   '/app/billing': typeof AppBillingRoute
   '/app/deliveries': typeof AppDeliveriesRoute
   '/app/forecast': typeof AppForecastRoute
+  '/app/inventory': typeof AppInventoryRoute
+  '/app/planning': typeof AppPlanningRoute
   '/app/settings': typeof AppSettingsRoute
   '/app/': typeof AppIndexRoute
 }
@@ -67,6 +81,8 @@ export interface FileRoutesByTo {
   '/app/billing': typeof AppBillingRoute
   '/app/deliveries': typeof AppDeliveriesRoute
   '/app/forecast': typeof AppForecastRoute
+  '/app/inventory': typeof AppInventoryRoute
+  '/app/planning': typeof AppPlanningRoute
   '/app/settings': typeof AppSettingsRoute
   '/app': typeof AppIndexRoute
 }
@@ -77,6 +93,8 @@ export interface FileRoutesById {
   '/app/billing': typeof AppBillingRoute
   '/app/deliveries': typeof AppDeliveriesRoute
   '/app/forecast': typeof AppForecastRoute
+  '/app/inventory': typeof AppInventoryRoute
+  '/app/planning': typeof AppPlanningRoute
   '/app/settings': typeof AppSettingsRoute
   '/app/': typeof AppIndexRoute
 }
@@ -88,6 +106,8 @@ export interface FileRouteTypes {
     | '/app/billing'
     | '/app/deliveries'
     | '/app/forecast'
+    | '/app/inventory'
+    | '/app/planning'
     | '/app/settings'
     | '/app/'
   fileRoutesByTo: FileRoutesByTo
@@ -96,6 +116,8 @@ export interface FileRouteTypes {
     | '/app/billing'
     | '/app/deliveries'
     | '/app/forecast'
+    | '/app/inventory'
+    | '/app/planning'
     | '/app/settings'
     | '/app'
   id:
@@ -105,6 +127,8 @@ export interface FileRouteTypes {
     | '/app/billing'
     | '/app/deliveries'
     | '/app/forecast'
+    | '/app/inventory'
+    | '/app/planning'
     | '/app/settings'
     | '/app/'
   fileRoutesById: FileRoutesById
@@ -144,6 +168,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppSettingsRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/planning': {
+      id: '/app/planning'
+      path: '/planning'
+      fullPath: '/app/planning'
+      preLoaderRoute: typeof AppPlanningRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/inventory': {
+      id: '/app/inventory'
+      path: '/inventory'
+      fullPath: '/app/inventory'
+      preLoaderRoute: typeof AppInventoryRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/forecast': {
       id: '/app/forecast'
       path: '/forecast'
@@ -172,6 +210,8 @@ interface AppRouteChildren {
   AppBillingRoute: typeof AppBillingRoute
   AppDeliveriesRoute: typeof AppDeliveriesRoute
   AppForecastRoute: typeof AppForecastRoute
+  AppInventoryRoute: typeof AppInventoryRoute
+  AppPlanningRoute: typeof AppPlanningRoute
   AppSettingsRoute: typeof AppSettingsRoute
   AppIndexRoute: typeof AppIndexRoute
 }
@@ -180,6 +220,8 @@ const AppRouteChildren: AppRouteChildren = {
   AppBillingRoute: AppBillingRoute,
   AppDeliveriesRoute: AppDeliveriesRoute,
   AppForecastRoute: AppForecastRoute,
+  AppInventoryRoute: AppInventoryRoute,
+  AppPlanningRoute: AppPlanningRoute,
   AppSettingsRoute: AppSettingsRoute,
   AppIndexRoute: AppIndexRoute,
 }
