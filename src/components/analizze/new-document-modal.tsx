@@ -32,9 +32,9 @@ export function NewDocumentModal({ defaultTable = "carteira" }: { defaultTable?:
     if (table === "carteira") {
       addCarteira({ product, qtyDone: Number(qty) || 0, qtyTotal: Number(qtyTotal) || 1, status, deadline: deadline || new Date().toISOString().slice(0, 10) });
     } else if (table === "estoque") {
-      addEstoque({ sku, product, qty: Number(qty) || 0, location });
+      addEstoque({ sku, product, qty: Number(qty) || 0, location, cost: Number(amount) || 0, lastMovement: new Date().toISOString().slice(0, 10) });
     } else {
-      addFaturamento({ client, category, amount: Number(amount) || 0, status: finStatus, date: new Date().toISOString().slice(0, 10) });
+      addFaturamento({ client, category, amount: Number(amount) || 0, volume: Number(qty) || 0, status: finStatus, date: new Date().toISOString().slice(0, 10) });
     }
     reset();
     setOpen(false);
@@ -99,6 +99,7 @@ export function NewDocumentModal({ defaultTable = "carteira" }: { defaultTable?:
                     <Field label="Quantidade" value={qty} onChange={setQty} type="number" />
                     <Field label="Localização" value={location} onChange={setLocation} />
                   </div>
+                  <Field label="Custo unitário (R$)" value={amount} onChange={setAmount} type="number" />
                 </>
               )}
               {table === "faturamento" && (
@@ -108,6 +109,7 @@ export function NewDocumentModal({ defaultTable = "carteira" }: { defaultTable?:
                     <Field label="Categoria" value={category} onChange={setCategory} />
                     <Field label="Valor (R$)" value={amount} onChange={setAmount} type="number" />
                   </div>
+                  <Field label="Volume (unidades)" value={qty} onChange={setQty} type="number" />
                   <Select label="Status" value={finStatus} onChange={(v) => setFinStatus(v as "realized" | "lost" | "projected")} options={["realized", "lost", "projected"]} />
                 </>
               )}
