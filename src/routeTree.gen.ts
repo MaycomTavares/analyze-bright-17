@@ -13,7 +13,9 @@ import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppSettingsRouteImport } from './routes/app.settings'
-import { Route as AppReportsRouteImport } from './routes/app.reports'
+import { Route as AppPlanningRouteImport } from './routes/app.planning'
+import { Route as AppInventoryRouteImport } from './routes/app.inventory'
+import { Route as AppForecastRouteImport } from './routes/app.forecast'
 import { Route as AppDeliveriesRouteImport } from './routes/app.deliveries'
 import { Route as AppBillingRouteImport } from './routes/app.billing'
 
@@ -37,9 +39,19 @@ const AppSettingsRoute = AppSettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => AppRoute,
 } as any)
-const AppReportsRoute = AppReportsRouteImport.update({
-  id: '/reports',
-  path: '/reports',
+const AppPlanningRoute = AppPlanningRouteImport.update({
+  id: '/planning',
+  path: '/planning',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppInventoryRoute = AppInventoryRouteImport.update({
+  id: '/inventory',
+  path: '/inventory',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppForecastRoute = AppForecastRouteImport.update({
+  id: '/forecast',
+  path: '/forecast',
   getParentRoute: () => AppRoute,
 } as any)
 const AppDeliveriesRoute = AppDeliveriesRouteImport.update({
@@ -58,7 +70,9 @@ export interface FileRoutesByFullPath {
   '/app': typeof AppRouteWithChildren
   '/app/billing': typeof AppBillingRoute
   '/app/deliveries': typeof AppDeliveriesRoute
-  '/app/reports': typeof AppReportsRoute
+  '/app/forecast': typeof AppForecastRoute
+  '/app/inventory': typeof AppInventoryRoute
+  '/app/planning': typeof AppPlanningRoute
   '/app/settings': typeof AppSettingsRoute
   '/app/': typeof AppIndexRoute
 }
@@ -66,7 +80,9 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/app/billing': typeof AppBillingRoute
   '/app/deliveries': typeof AppDeliveriesRoute
-  '/app/reports': typeof AppReportsRoute
+  '/app/forecast': typeof AppForecastRoute
+  '/app/inventory': typeof AppInventoryRoute
+  '/app/planning': typeof AppPlanningRoute
   '/app/settings': typeof AppSettingsRoute
   '/app': typeof AppIndexRoute
 }
@@ -76,7 +92,9 @@ export interface FileRoutesById {
   '/app': typeof AppRouteWithChildren
   '/app/billing': typeof AppBillingRoute
   '/app/deliveries': typeof AppDeliveriesRoute
-  '/app/reports': typeof AppReportsRoute
+  '/app/forecast': typeof AppForecastRoute
+  '/app/inventory': typeof AppInventoryRoute
+  '/app/planning': typeof AppPlanningRoute
   '/app/settings': typeof AppSettingsRoute
   '/app/': typeof AppIndexRoute
 }
@@ -87,7 +105,9 @@ export interface FileRouteTypes {
     | '/app'
     | '/app/billing'
     | '/app/deliveries'
-    | '/app/reports'
+    | '/app/forecast'
+    | '/app/inventory'
+    | '/app/planning'
     | '/app/settings'
     | '/app/'
   fileRoutesByTo: FileRoutesByTo
@@ -95,7 +115,9 @@ export interface FileRouteTypes {
     | '/'
     | '/app/billing'
     | '/app/deliveries'
-    | '/app/reports'
+    | '/app/forecast'
+    | '/app/inventory'
+    | '/app/planning'
     | '/app/settings'
     | '/app'
   id:
@@ -104,7 +126,9 @@ export interface FileRouteTypes {
     | '/app'
     | '/app/billing'
     | '/app/deliveries'
-    | '/app/reports'
+    | '/app/forecast'
+    | '/app/inventory'
+    | '/app/planning'
     | '/app/settings'
     | '/app/'
   fileRoutesById: FileRoutesById
@@ -144,11 +168,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppSettingsRouteImport
       parentRoute: typeof AppRoute
     }
-    '/app/reports': {
-      id: '/app/reports'
-      path: '/reports'
-      fullPath: '/app/reports'
-      preLoaderRoute: typeof AppReportsRouteImport
+    '/app/planning': {
+      id: '/app/planning'
+      path: '/planning'
+      fullPath: '/app/planning'
+      preLoaderRoute: typeof AppPlanningRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/inventory': {
+      id: '/app/inventory'
+      path: '/inventory'
+      fullPath: '/app/inventory'
+      preLoaderRoute: typeof AppInventoryRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/forecast': {
+      id: '/app/forecast'
+      path: '/forecast'
+      fullPath: '/app/forecast'
+      preLoaderRoute: typeof AppForecastRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/deliveries': {
@@ -171,7 +209,9 @@ declare module '@tanstack/react-router' {
 interface AppRouteChildren {
   AppBillingRoute: typeof AppBillingRoute
   AppDeliveriesRoute: typeof AppDeliveriesRoute
-  AppReportsRoute: typeof AppReportsRoute
+  AppForecastRoute: typeof AppForecastRoute
+  AppInventoryRoute: typeof AppInventoryRoute
+  AppPlanningRoute: typeof AppPlanningRoute
   AppSettingsRoute: typeof AppSettingsRoute
   AppIndexRoute: typeof AppIndexRoute
 }
@@ -179,7 +219,9 @@ interface AppRouteChildren {
 const AppRouteChildren: AppRouteChildren = {
   AppBillingRoute: AppBillingRoute,
   AppDeliveriesRoute: AppDeliveriesRoute,
-  AppReportsRoute: AppReportsRoute,
+  AppForecastRoute: AppForecastRoute,
+  AppInventoryRoute: AppInventoryRoute,
+  AppPlanningRoute: AppPlanningRoute,
   AppSettingsRoute: AppSettingsRoute,
   AppIndexRoute: AppIndexRoute,
 }
@@ -193,12 +235,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}

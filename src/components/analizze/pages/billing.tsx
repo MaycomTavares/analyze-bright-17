@@ -1,5 +1,5 @@
-import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
-import { AlertTriangle, CheckCircle2, Info, TrendingDown, TrendingUp } from "lucide-react";
+import { Bar, BarChart, CartesianGrid, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { AlertTriangle, CheckCircle2, Info, Package, TrendingDown, TrendingUp } from "lucide-react";
 import { Card, PageHeader } from "../ui-bits";
 import { NewDocumentModal } from "../new-document-modal";
 import { useAnalizze } from "@/lib/analizze-store";
@@ -11,36 +11,45 @@ export function BillingPage() {
   const { faturamento } = useAnalizze();
 
   const totals = useMemo(() => {
-    const sum = (s: string) => faturamento.filter((f) => f.status === s).reduce((a, b) => a + b.amount, 0);
+    const sum = (s: string) => faturamento.filter((f) => f.status === s).reduce((a, b) => a + b.volume, 0);
     return { realized: sum("realized"), lost: sum("lost"), projected: sum("projected") };
   }, [faturamento]);
 
   const byCategory = useMemo(() => {
     const map = new Map<string, number>();
-    faturamento.forEach((f) => map.set(f.category, (map.get(f.category) || 0) + f.amount));
+    faturamento.forEach((f) => map.set(f.category, (map.get(f.category) || 0) + f.volume));
     return Array.from(map, ([name, value]) => ({ name, value }));
   }, [faturamento]);
 
-  const fmt = (n: number) => "R$ " + n.toLocaleString("pt-BR");
+  const fmt = (n: number) => n.toLocaleString("pt-BR") + " un.";
+
+  const byClient = useMemo(
+    () =>
+      faturamento
+        .map((f) => ({ name: f.client, volume: f.volume }))
+        .sort((a, b) => b.volume - a.volume)
+        .slice(0, 6),
+    [faturamento],
+  );
 
   const cards = [
-    { label: "Realizado", value: totals.realized, accent: "from-emerald-500 to-emerald-600", trend: "+12,4%", up: true, icon: CheckCircle2 },
-    { label: "Perdido", value: totals.lost, accent: "from-rose-500 to-rose-600", trend: "-3,1%", up: false, icon: TrendingDown },
-    { label: "Projetado", value: totals.projected, accent: "from-brand to-indigo-600", trend: "+8,7%", up: true, icon: TrendingUp },
+    { label: "Volume Realizado", value: totals.realized, accent: "from-emerald-500 to-emerald-600", trend: "+12,4%", up: true, icon: CheckCircle2 },
+    { label: "Volume Perdido", value: totals.lost, accent: "from-rose-500 to-rose-600", trend: "-3,1%", up: false, icon: TrendingDown },
+    { label: "Volume Projetado", value: totals.projected, accent: "from-brand to-indigo-600", trend: "+8,7%", up: true, icon: TrendingUp },
   ];
 
   const alerts = [
-    { type: "warn", text: "FT-1004 Lumen Aeroespacial marcada como perdida — revisar motivo." },
-    { type: "info", text: "Receita projetada de Maio supera meta do Q2 em 4,2%." },
-    { type: "warn", text: "Pagamento da Helix Farma em atraso há 6 dias." },
-    { type: "ok", text: "Taxa de cobrança de Abril atingiu 96,8%." },
+    { type: "warn", text: "FT-1004 Lumen Aeroespacial: 90 unidades perdidas — revisar motivo." },
+    { type: "info", text: "Volume projetado de Maio supera meta de unidades em 4,2%." },
+    { type: "warn", text: "Helix Farma: 510 unidades pendentes de confirmação há 6 dias." },
+    { type: "ok", text: "Taxa de conversão de volume em Abril atingiu 96,8%." },
   ];
 
   return (
     <div>
       <PageHeader
         title="Faturamento"
-        subtitle="Realizado, perdido e projetado"
+        subtitle="Quantidade de itens previstos para venda — volume realizado, perdido e projetado"
         actions={<NewDocumentModal defaultTable="faturamento" />}
       />
 
@@ -66,8 +75,8 @@ export function BillingPage() {
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-5">
         <Card className="xl:col-span-2 p-7 az-slide-left" animate={false}>
-          <h3 className="text-lg font-black italic tracking-tight text-slate-900 mb-1">Distribuição por Categoria</h3>
-          <p className="text-xs text-slate-500 mb-4">Receita por vertical de mercado</p>
+          <h3 className="text-lg font-black italic tracking-tight text-slate-900 mb-1">Volume por Categoria</h3>
+          <p className="text-xs text-slate-500 mb-4">Unidades previstas por vertical de mercado</p>
           <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-6">
             <div className="h-[260px]">
               <ResponsiveContainer width="100%" height="100%">
@@ -94,7 +103,7 @@ export function BillingPage() {
         </Card>
 
         <Card className="p-6 az-slide-right" animate={false}>
-          <h3 className="text-lg font-black italic tracking-tight text-slate-900 mb-4">Alertas Financeiros</h3>
+          <h3 className="text-lg font-black italic tracking-tight text-slate-900 mb-4">Alertas de Volume</h3>
           <ul className="space-y-3">
             {alerts.map((a, i) => {
               const Icon = a.type === "warn" ? AlertTriangle : a.type === "ok" ? CheckCircle2 : Info;
@@ -113,6 +122,27 @@ export function BillingPage() {
               );
             })}
           </ul>
+        </Card>
+
+        <Card className="xl:col-span-3 p-7" animate={false}>
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h3 className="text-lg font-black italic tracking-tight text-slate-900">Volume por Cliente</h3>
+              <p className="text-xs text-slate-500 mt-0.5">Top clientes em quantidade de itens previstos</p>
+            </div>
+            <Package className="h-4 w-4 text-slate-400" />
+          </div>
+          <div className="h-[280px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={byClient}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
+                <XAxis dataKey="name" stroke="#64748b" fontSize={11} tickLine={false} axisLine={false} />
+                <YAxis stroke="#64748b" fontSize={12} tickLine={false} axisLine={false} />
+                <Tooltip formatter={(v: number) => fmt(v)} contentStyle={{ borderRadius: 12, border: "1px solid #e2e8f0", fontSize: 12 }} />
+                <Bar dataKey="volume" fill="#2563eb" radius={[8, 8, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
         </Card>
       </div>
     </div>

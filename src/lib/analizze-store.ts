@@ -17,6 +17,8 @@ export interface EstoqueItem {
   product: string;
   qty: number;
   location: string;
+  cost: number;
+  lastMovement: string;
 }
 
 export interface FaturamentoEntry {
@@ -24,6 +26,7 @@ export interface FaturamentoEntry {
   client: string;
   category: string;
   amount: number;
+  volume: number;
   status: "realized" | "lost" | "projected";
   date: string;
 }
@@ -64,18 +67,22 @@ export const seedCarteira: CarteiraLot[] = [
 ];
 
 export const seedEstoque: EstoqueItem[] = [
-  { id: "INV-001", sku: "SKU-44021", product: "Barra de Aço 12mm", qty: 1240, location: "GAL-A / R3" },
-  { id: "INV-002", sku: "SKU-44022", product: "Bobina de Cobre 0.5mm", qty: 560, location: "GAL-A / R7" },
-  { id: "INV-003", sku: "SKU-44023", product: "Resina Polimérica", qty: 88, location: "GAL-B / R1" },
+  { id: "INV-001", sku: "SKU-44021", product: "Barra de Aço 12mm", qty: 1240, location: "GAL-A / R3", cost: 42.5, lastMovement: "2026-04-28" },
+  { id: "INV-002", sku: "SKU-44022", product: "Bobina de Cobre 0.5mm", qty: 560, location: "GAL-A / R7", cost: 118.9, lastMovement: "2026-04-30" },
+  { id: "INV-003", sku: "SKU-44023", product: "Resina Polimérica", qty: 88, location: "GAL-B / R1", cost: 76.0, lastMovement: "2026-01-12" },
+  { id: "INV-004", sku: "SKU-44024", product: "Servo Motor SM-7K", qty: 64, location: "GAL-C / R2", cost: 880.0, lastMovement: "2025-11-04" },
+  { id: "INV-005", sku: "SKU-44025", product: "Engrenagem PG-12T", qty: 310, location: "GAL-B / R4", cost: 54.2, lastMovement: "2026-04-22" },
+  { id: "INV-006", sku: "SKU-44026", product: "Painel Compósito CP-XL", qty: 12, location: "GAL-D / R1", cost: 1240.0, lastMovement: "2025-09-18" },
+  { id: "INV-007", sku: "SKU-44027", product: "Rolamento 6204-2RS", qty: 980, location: "GAL-A / R1", cost: 18.4, lastMovement: "2026-05-01" },
 ];
 
 export const seedFaturamento: FaturamentoEntry[] = [
-  { id: "FT-1001", client: "Volkfeld GmbH", category: "Automotivo", amount: 184230, status: "realized", date: "2026-04-22" },
-  { id: "FT-1002", client: "Northwind Energia", category: "Energia", amount: 92500, status: "realized", date: "2026-04-25" },
-  { id: "FT-1003", client: "Atlas Robótica", category: "Robótica", amount: 56800, status: "projected", date: "2026-05-05" },
-  { id: "FT-1004", client: "Lumen Aeroespacial", category: "Aeroespacial", amount: 32100, status: "lost", date: "2026-04-19" },
-  { id: "FT-1005", client: "Helix Farma", category: "Farmacêutico", amount: 71400, status: "projected", date: "2026-05-09" },
-  { id: "FT-1006", client: "Cobalto Mineração", category: "Mineração", amount: 128900, status: "realized", date: "2026-04-28" },
+  { id: "FT-1001", client: "Volkfeld GmbH", category: "Automotivo", amount: 184230, volume: 820, status: "realized", date: "2026-04-22" },
+  { id: "FT-1002", client: "Northwind Energia", category: "Energia", amount: 92500, volume: 410, status: "realized", date: "2026-04-25" },
+  { id: "FT-1003", client: "Atlas Robótica", category: "Robótica", amount: 56800, volume: 230, status: "projected", date: "2026-05-05" },
+  { id: "FT-1004", client: "Lumen Aeroespacial", category: "Aeroespacial", amount: 32100, volume: 90, status: "lost", date: "2026-04-19" },
+  { id: "FT-1005", client: "Helix Farma", category: "Farmacêutico", amount: 71400, volume: 510, status: "projected", date: "2026-05-09" },
+  { id: "FT-1006", client: "Cobalto Mineração", category: "Mineração", amount: 128900, volume: 640, status: "realized", date: "2026-04-28" },
 ];
 
 export const AnalizzeContext = createContext<AnalizzeState | null>(null);
