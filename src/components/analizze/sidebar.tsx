@@ -1,5 +1,5 @@
 import { Link, useRouterState, type LinkProps } from "@tanstack/react-router";
-import { LayoutDashboard, Truck, Receipt, Settings, LogOut, Activity, LineChart, ClipboardList, Boxes } from "lucide-react";
+import { LayoutDashboard, Receipt, Settings, LogOut, Activity, LineChart, ClipboardList, Boxes } from "lucide-react";
 import { useAnalizze } from "@/lib/analizze-store";
 import { cn } from "@/lib/utils";
 
@@ -15,7 +15,6 @@ const items: Item[] = [
   { to: "/app/forecast", label: "Forecast", icon: LineChart },
   { to: "/app/planning", label: "Planejamento", icon: ClipboardList },
   { to: "/app/inventory", label: "Estoque", icon: Boxes },
-  { to: "/app/deliveries", label: "Entregas", icon: Truck },
   { to: "/app/billing", label: "Faturamento", icon: Receipt },
   { to: "/app/settings", label: "Configurações", icon: Settings },
 ];
