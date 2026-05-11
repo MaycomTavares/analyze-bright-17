@@ -1,5 +1,5 @@
 import { Bar, BarChart, CartesianGrid, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { AlertTriangle, CheckCircle2, Info, Package, TrendingDown, TrendingUp } from "lucide-react";
+import { CheckCircle2, Package, TrendingDown, TrendingUp } from "lucide-react";
 import { Card, PageHeader } from "../ui-bits";
 import { NewDocumentModal } from "../new-document-modal";
 import { useAnalizze } from "@/lib/analizze-store";
@@ -38,13 +38,6 @@ export function BillingPage() {
     { label: "Volume Projetado", value: totals.projected, accent: "from-brand to-indigo-600", trend: "+8,7%", up: true, icon: TrendingUp },
   ];
 
-  const alerts = [
-    { type: "warn", text: "FT-1004 Lumen Aeroespacial: 90 unidades perdidas — revisar motivo." },
-    { type: "info", text: "Volume projetado de Maio supera meta de unidades em 4,2%." },
-    { type: "warn", text: "Helix Farma: 510 unidades pendentes de confirmação há 6 dias." },
-    { type: "ok", text: "Taxa de conversão de volume em Abril atingiu 96,8%." },
-  ];
-
   return (
     <div>
       <PageHeader
@@ -74,7 +67,7 @@ export function BillingPage() {
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-5">
-        <Card className="xl:col-span-2 p-7 az-slide-left" animate={false}>
+        <Card className="xl:col-span-3 p-7 az-slide-left" animate={false}>
           <h3 className="text-lg font-black italic tracking-tight text-slate-900 mb-1">Volume por Categoria</h3>
           <p className="text-xs text-slate-500 mb-4">Unidades previstas por vertical de mercado</p>
           <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-6">
@@ -100,28 +93,6 @@ export function BillingPage() {
               ))}
             </ul>
           </div>
-        </Card>
-
-        <Card className="p-6 az-slide-right" animate={false}>
-          <h3 className="text-lg font-black italic tracking-tight text-slate-900 mb-4">Alertas de Volume</h3>
-          <ul className="space-y-3">
-            {alerts.map((a, i) => {
-              const Icon = a.type === "warn" ? AlertTriangle : a.type === "ok" ? CheckCircle2 : Info;
-              const color = a.type === "warn" ? "text-amber-600 bg-amber-50" : a.type === "ok" ? "text-emerald-600 bg-emerald-50" : "text-brand bg-brand/10";
-              return (
-                <li
-                  key={i}
-                  className="flex items-start gap-3 p-3 rounded-2xl hover:bg-slate-50 transition az-row-in cursor-pointer hover:translate-x-1 duration-300"
-                  style={{ animationDelay: `${i * 80}ms` }}
-                >
-                  <span className={`h-8 w-8 rounded-xl flex items-center justify-center shrink-0 transition-transform hover:scale-110 ${color}`}>
-                    <Icon className="h-4 w-4" />
-                  </span>
-                  <span className="text-sm text-slate-700 leading-snug">{a.text}</span>
-                </li>
-              );
-            })}
-          </ul>
         </Card>
 
         <Card className="xl:col-span-3 p-7" animate={false}>
